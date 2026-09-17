@@ -382,24 +382,26 @@
     justify-content: flex-end;
   }
 
+  /* Emoji Play Button */
   .channel-btn {
     background: rgba(255, 255, 255, 0.07);
     border: 1px solid var(--glass-border);
     border-radius: 8px;
-    padding: 4px 6px;
+    padding: 6px 4px;
     text-align: center;
     cursor: pointer;
-    transition: background .2s, border-color .2s;
+    transition: background .2s, border-color .2s, transform .1s;
     width: 100%;
   }
-  .channel-btn:hover { background: rgba(255, 255, 255, 0.16); }
+  .channel-btn:hover { background: rgba(255, 255, 255, 0.18); }
+  .channel-btn:active { transform: scale(0.95); }
   .channel-btn.active {
     background: #4ba368;
     border-color: #8edaa5;
     box-shadow: 0 0 10px rgba(75, 163, 104, 0.4);
   }
-  .channel-btn span { display: block; font-size: 1.15rem; line-height: 1.1; }
-  .channel-btn small { font-size: .62rem; font-weight: 600; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
+  .channel-btn span { display: block; font-size: 1.25rem; line-height: 1.1; }
+  .channel-btn small { font-size: .6rem; font-weight: 600; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
 
   .slider-col {
     display: flex;
@@ -737,9 +739,9 @@
 
         <h3>3. Mixing Ambient Audio</h3>
         <ul>
-          <li><strong>Layer multiple sounds:</strong> Play and combine audio tracks simultaneously using your files in the <code>sound/</code> folder.</li>
-          <li><strong>Volume sliders:</strong> Use dedicated vertical volume sliders under each sound channel to balance your mix.</li>
-          <li><strong>Mute options:</strong> Mute individual tracks with one tap, or use the <em>Mute Mix</em> button to silence all soundscapes instantly.</li>
+          <li><strong>Layer multiple sounds:</strong> Click the emoji buttons to play and combine audio tracks simultaneously from your <code>sound/</code> folder.</li>
+          <li><strong>Vertical sliders:</strong> Adjust the vertical volume sliders under each emoji button to balance your custom mix.</li>
+          <li><strong>Mute mix:</strong> Use the <em>Mute Mix</em> button to silence all active sound channels instantly.</li>
         </ul>
 
         <h3>4. Playing & Organizing YouTube Videos</h3>
@@ -802,78 +804,78 @@
 
       <div class="resizer-bar-h" id="resizerLeftH"></div>
 
-      <!-- Multi-Track Sound Mixer (Local Files in ./sound/ folder) -->
+      <!-- Multi-Track Sound Mixer (Emoji Play Buttons) -->
       <div class="panel" id="panel-sounds">
         <div class="panel-header">
-          <span class="panel-title">🌿 Sound Mixer (Layer Multiple)</span>
+          <span class="panel-title">🌿 Sound Mixer</span>
           <button class="btn-action sec" style="padding: 2px 8px; font-size: .68rem;" id="btnMuteAllMixer">🔇 Mute Mix</button>
         </div>
         
         <div class="mixer-row">
-          <!-- Track 1: Water & Birds -->
+          <!-- Track 1: Stream -->
           <div class="sound-channel" data-id="stream">
-            <div class="slider-col">
-              <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
-            </div>
-            <button class="channel-btn">
+            <button class="channel-btn" title="Click to Play/Pause">
               <span>💧</span>
               <small>Stream</small>
             </button>
-          </div>
-
-          <!-- Track 2: Thunderstorm & Rain -->
-          <div class="sound-channel" data-id="thunder">
             <div class="slider-col">
               <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
             </div>
-            <button class="channel-btn">
+          </div>
+
+          <!-- Track 2: Thunder -->
+          <div class="sound-channel" data-id="thunder">
+            <button class="channel-btn" title="Click to Play/Pause">
               <span>☔</span>
               <small>Thunder</small>
             </button>
-          </div>
-
-          <!-- Track 3: Kitchen 1 -->
-          <div class="sound-channel" data-id="kitchen1">
             <div class="slider-col">
               <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
             </div>
-            <button class="channel-btn">
+          </div>
+
+          <!-- Track 3: Kitchen I -->
+          <div class="sound-channel" data-id="kitchen1">
+            <button class="channel-btn" title="Click to Play/Pause">
               <span>🥐</span>
               <small>Kitchen I</small>
             </button>
-          </div>
-
-          <!-- Track 4: Kitchen 2 -->
-          <div class="sound-channel" data-id="kitchen2">
             <div class="slider-col">
               <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
             </div>
-            <button class="channel-btn">
+          </div>
+
+          <!-- Track 4: Kitchen II -->
+          <div class="sound-channel" data-id="kitchen2">
+            <button class="channel-btn" title="Click to Play/Pause">
               <span>☕</span>
               <small>Kitchen II</small>
             </button>
-          </div>
-
-          <!-- Track 5: Afternoon Forest -->
-          <div class="sound-channel" data-id="forest">
             <div class="slider-col">
               <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
             </div>
-            <button class="channel-btn">
+          </div>
+
+          <!-- Track 5: Forest -->
+          <div class="sound-channel" data-id="forest">
+            <button class="channel-btn" title="Click to Play/Pause">
               <span>🌲</span>
               <small>Forest</small>
             </button>
-          </div>
-
-          <!-- Track 6: Fireplace -->
-          <div class="sound-channel" data-id="fire">
             <div class="slider-col">
               <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
             </div>
-            <button class="channel-btn">
+          </div>
+
+          <!-- Track 6: Fire -->
+          <div class="sound-channel" data-id="fire">
+            <button class="channel-btn" title="Click to Play/Pause">
               <span>🔥</span>
               <small>Fire</small>
             </button>
+            <div class="slider-col">
+              <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
+            </div>
           </div>
         </div>
       </div>
@@ -989,8 +991,8 @@ manualModal.addEventListener('click', (e) => {
 });
 
 /* ═══════════════════ DATA & STORAGE ═══════════════════ */
-const STORAGE_KEY = 'physio_suite_v20';
-const YT_MASTER_KEY = 'physio_yt_master_v6';
+const STORAGE_KEY = 'physio_suite_v21';
+const YT_MASTER_KEY = 'physio_yt_master_v7';
 const CIRC = 2 * Math.PI * 86;
 
 const DEFAULT_EXERCISES = [
@@ -1168,7 +1170,7 @@ document.querySelectorAll('.toggle-btn').forEach(btn => {
   });
 });
 
-/* ═══════════════════ MULTI-TRACK SOUND MIXER (CORRECTED ./sound/ PATH) ═══════════════════ */
+/* ═══════════════════ MULTI-TRACK SOUND MIXER (EMOJI PLAY BUTTONS) ═══════════════════ */
 const soundTracks = {
   stream:   new Audio('./sound/mixkit-natural-ambience-with-flowing-water-and-birds-61.wav'),
   thunder:  new Audio('./sound/mixkit-thunderstorm-and-rain-loop-2402.wav'),
