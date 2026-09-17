@@ -30,7 +30,6 @@
 
     /* Layout Dimensions */
     --left-col-width: 44%;
-    --left-top-height: 52%;
     --right-top-height: 60%;
     --circle-dyn-size: 160px;
     --video-split-width: 58%;
@@ -215,28 +214,6 @@
     height: 120px;
   }
 
-  .resizer-bar-h {
-    height: 10px;
-    cursor: row-resize;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 3px 0;
-    z-index: 10;
-  }
-  .resizer-bar-h::after {
-    content: '';
-    width: 70px;
-    height: 4px;
-    background: var(--glass-border);
-    border-radius: 4px;
-    transition: background .2s, width .2s;
-  }
-  .resizer-bar-h:hover::after, .resizer-bar-h.dragging::after {
-    background: #4ba368;
-    width: 120px;
-  }
-
   .panel {
     background: var(--glass-card);
     border: 1.5px solid var(--glass-border);
@@ -273,8 +250,8 @@
 
   /* ── Stage Box with Dynamic Phase Backgrounds ── */
   #panel-timer {
-    height: var(--left-top-height);
-    flex-shrink: 0;
+    flex: 1;
+    min-height: 0;
     container-type: size;
     background: var(--stage-bg-idle);
   }
@@ -353,78 +330,7 @@
   button.ctrl.pause-all { background: #b8600a; border-color: #f7a261; }
   button:disabled { opacity: .35; cursor: not-allowed; }
 
-  /* ── Multi-Track Sound Mixer with Vertical Sliders ── */
-  #panel-sounds {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .mixer-row {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
-    flex: 1;
-    min-height: 0;
-    gap: 6px;
-    padding: 6px 2px 2px;
-    overflow-x: auto;
-  }
-
-  .sound-channel {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    height: 100%;
-    min-width: 48px;
-    justify-content: flex-end;
-  }
-
-  /* Emoji Play Button */
-  .channel-btn {
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid var(--glass-border);
-    border-radius: 8px;
-    padding: 6px 4px;
-    text-align: center;
-    cursor: pointer;
-    transition: background .2s, border-color .2s, transform .1s;
-    width: 100%;
-  }
-  .channel-btn:hover { background: rgba(255, 255, 255, 0.18); }
-  .channel-btn:active { transform: scale(0.95); }
-  .channel-btn.active {
-    background: #4ba368;
-    border-color: #8edaa5;
-    box-shadow: 0 0 10px rgba(75, 163, 104, 0.4);
-  }
-  .channel-btn span { display: block; font-size: 1.25rem; line-height: 1.1; }
-  .channel-btn small { font-size: .6rem; font-weight: 600; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
-
-  .slider-col {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    min-height: 55px;
-  }
-
-  /* Vertical Volume Range Slider */
-  .v-slider {
-    writing-mode: vertical-lr;
-    direction: rtl;
-    width: 18px;
-    height: 100%;
-    max-height: 80px;
-    accent-color: #4ba368;
-    cursor: pointer;
-    background: transparent;
-  }
-
-  /* ── Right-Side Video Station (Vertical Split + Slider) ── */
+  /* ── Right-Side Video Station ── */
   #panel-yt {
     height: var(--right-top-height);
     flex-shrink: 0;
@@ -695,7 +601,7 @@
   <header>
     <div class="brand-group">
       <h1>🩹 Physio Workout Suite</h1>
-      <div class="sub">Dynamic Multi-Split Station · Interactive Sound Mixer</div>
+      <div class="sub">Dynamic Multi-Split Station</div>
     </div>
     <div class="header-controls">
       <button class="btn-manual" id="btnOpenManual">📖 Manual</button>
@@ -706,7 +612,6 @@
       <div class="toggle-bar">
         <span style="font-size:.72rem;color:var(--muted);margin-right:2px;">Panels:</span>
         <button class="toggle-btn active" data-target="panel-timer">⏱️ Timer</button>
-        <button class="toggle-btn active" data-target="panel-sounds">🌿 Mixer</button>
         <button class="toggle-btn active" data-target="panel-yt">📺 Video Station</button>
         <button class="toggle-btn active" data-target="panel-playlist">📋 Routine</button>
       </div>
@@ -737,14 +642,7 @@
           <li><strong>Playback controls:</strong> Start, pause, resume, skip, or reset using dedicated buttons stacked beside the circle.</li>
         </ul>
 
-        <h3>3. Mixing Ambient Audio</h3>
-        <ul>
-          <li><strong>Layer multiple sounds:</strong> Click the emoji buttons to play and combine audio tracks simultaneously from your <code>sound/</code> folder.</li>
-          <li><strong>Vertical sliders:</strong> Adjust the vertical volume sliders under each emoji button to balance your custom mix.</li>
-          <li><strong>Mute mix:</strong> Use the <em>Mute Mix</em> button to silence all active sound channels instantly.</li>
-        </ul>
-
-        <h3>4. Playing & Organizing YouTube Videos</h3>
+        <h3>3. Playing & Organizing YouTube Videos</h3>
         <ul>
           <li><strong>Watch while training:</strong> Play exercise guides or stretch tutorials directly alongside your workout.</li>
           <li><strong>Layout split slider:</strong> Resize the width ratio between the video player and controls from 30% to 75%.</li>
@@ -755,11 +653,11 @@
           <li><strong>Queues & playlists:</strong> Add individual videos or entire folders into a playback queue, reorder via drag-and-drop handles, and save custom arrangements as reusable playlists.</li>
         </ul>
 
-        <h3>5. Workspace & Window Management</h3>
+        <h3>4. Workspace & Window Management</h3>
         <ul>
           <li><strong>Resizer bars:</strong> Drag horizontal and vertical divider bars to resize panels to your exact screen layout.</li>
-          <li><strong>Panel toggles:</strong> Show or hide the Timer, Sound Mixer, Video Station, or Routine builder from the top bar.</li>
-          <li><strong>Master Pause All:</strong> Instantly halts your workout timer, silences ambient sound tracks, and pauses video playback together.</li>
+          <li><strong>Panel toggles:</strong> Show or hide the Timer, Video Station, or Routine builder from the top bar.</li>
+          <li><strong>Master Pause All:</strong> Instantly halts your workout timer and pauses video playback together.</li>
           <li><strong>Local persistence:</strong> All routines, custom folders, saved videos, and playlists are stored directly in your browser.</li>
         </ul>
       </div>
@@ -767,7 +665,7 @@
   </div>
 
   <div class="layout-grid" id="layoutGrid">
-    <!-- LEFT SIDE: Timer & Sounds -->
+    <!-- LEFT SIDE: Timer Panel Only -->
     <div class="left-col" id="leftCol">
       <div class="panel" id="panel-timer">
         <div class="panel-header">
@@ -798,84 +696,6 @@
             <button class="ctrl pause-all" id="btnPauseAll">⏸ Pause All</button>
             <button class="ctrl" id="btnSkip" disabled>⏭ Skip</button>
             <button class="ctrl danger" id="btnReset">↺ Reset</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="resizer-bar-h" id="resizerLeftH"></div>
-
-      <!-- Multi-Track Sound Mixer (Emoji Play Buttons) -->
-      <div class="panel" id="panel-sounds">
-        <div class="panel-header">
-          <span class="panel-title">🌿 Sound Mixer</span>
-          <button class="btn-action sec" style="padding: 2px 8px; font-size: .68rem;" id="btnMuteAllMixer">🔇 Mute Mix</button>
-        </div>
-        
-        <div class="mixer-row">
-          <!-- Track 1: Stream -->
-          <div class="sound-channel" data-id="stream">
-            <button class="channel-btn" title="Click to Play/Pause">
-              <span>💧</span>
-              <small>Stream</small>
-            </button>
-            <div class="slider-col">
-              <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
-            </div>
-          </div>
-
-          <!-- Track 2: Thunder -->
-          <div class="sound-channel" data-id="thunder">
-            <button class="channel-btn" title="Click to Play/Pause">
-              <span>☔</span>
-              <small>Thunder</small>
-            </button>
-            <div class="slider-col">
-              <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
-            </div>
-          </div>
-
-          <!-- Track 3: Kitchen I -->
-          <div class="sound-channel" data-id="kitchen1">
-            <button class="channel-btn" title="Click to Play/Pause">
-              <span>🥐</span>
-              <small>Kitchen I</small>
-            </button>
-            <div class="slider-col">
-              <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
-            </div>
-          </div>
-
-          <!-- Track 4: Kitchen II -->
-          <div class="sound-channel" data-id="kitchen2">
-            <button class="channel-btn" title="Click to Play/Pause">
-              <span>☕</span>
-              <small>Kitchen II</small>
-            </button>
-            <div class="slider-col">
-              <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
-            </div>
-          </div>
-
-          <!-- Track 5: Forest -->
-          <div class="sound-channel" data-id="forest">
-            <button class="channel-btn" title="Click to Play/Pause">
-              <span>🌲</span>
-              <small>Forest</small>
-            </button>
-            <div class="slider-col">
-              <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
-            </div>
-          </div>
-
-          <!-- Track 6: Fire -->
-          <div class="sound-channel" data-id="fire">
-            <button class="channel-btn" title="Click to Play/Pause">
-              <span>🔥</span>
-              <small>Fire</small>
-            </button>
-            <div class="slider-col">
-              <input type="range" class="v-slider" min="0" max="1" step="0.01" value="0.7">
-            </div>
           </div>
         </div>
       </div>
@@ -982,6 +802,9 @@
 </div>
 
 <script>
+/* ═══════════════════ DOM HELPER FIRST (CRITICAL) ═══════════════════ */
+const $ = id => document.getElementById(id);
+
 /* ═══════════════════ MANUAL MODAL TOGGLES ═══════════════════ */
 const manualModal = $('manualModal');
 $('btnOpenManual').addEventListener('click', () => manualModal.classList.add('open'));
@@ -991,8 +814,8 @@ manualModal.addEventListener('click', (e) => {
 });
 
 /* ═══════════════════ DATA & STORAGE ═══════════════════ */
-const STORAGE_KEY = 'physio_suite_v21';
-const YT_MASTER_KEY = 'physio_yt_master_v7';
+const STORAGE_KEY = 'physio_suite_v25';
+const YT_MASTER_KEY = 'physio_yt_master_v11';
 const CIRC = 2 * Math.PI * 86;
 
 const DEFAULT_EXERCISES = [
@@ -1052,15 +875,14 @@ function metaText(ex) {
 let running=false, paused=false, stopReq=false, skipReq=false, runToken=0;
 let wakeLock = null;
 
-const $=id=>document.getElementById(id);
 const el={
   title:$('exTitle'), phase:$('exPhase'), bignum:$('bignum'),
   fg:$('fgCircle'), btnStart:$('btnStart'), btnPause:$('btnPause'),
   btnSkip:$('btnSkip'), btnReset:$('btnReset'), playlist:$('playlist'),
   btnPauseAll:$('btnPauseAll'),
   leftCol:$('leftCol'), rightCol:$('rightCol'), layoutGrid:$('layoutGrid'),
-  resizerBarV:$('resizerBarV'), resizerLeftH:$('resizerLeftH'), resizerRightH:$('resizerRightH'),
-  panelTimer:$('panel-timer'), panelSounds:$('panel-sounds'), panelYt:$('panel-yt'), panelPlaylist:$('panel-playlist'),
+  resizerBarV:$('resizerBarV'), resizerRightH:$('resizerRightH'),
+  panelTimer:$('panel-timer'), panelYt:$('panel-yt'), panelPlaylist:$('panel-playlist'),
   ytPlayerFrame:$('ytPlayerFrame'), ytStatusTitle:$('ytStatusTitle'),
   circleSizeSlider:$('circleSizeSlider'),
   
@@ -1072,8 +894,7 @@ const el={
   queueDrawer:$('queueDrawer'), queueBadge:$('queueBadge'),
   btnSaveQueueAsPlaylist:$('btnSaveQueueAsPlaylist'), btnNextQueue:$('btnNextQueue'), btnClearQueue:$('btnClearQueue'),
   playlistDrawer:$('playlistDrawer'),
-  videoSplitSlider:$('videoSplitSlider'),
-  btnMuteAllMixer:$('btnMuteAllMixer')
+  videoSplitSlider:$('videoSplitSlider')
 };
 
 /* ═══════════════════ RESIZERS & DYNAMIC SCALING ═══════════════════ */
@@ -1095,12 +916,6 @@ el.resizerBarV.addEventListener('mousedown', () => {
   document.body.style.cursor = 'col-resize';
 });
 
-el.resizerLeftH.addEventListener('mousedown', () => {
-  currentDrag = 'leftH';
-  el.resizerLeftH.classList.add('dragging');
-  document.body.style.cursor = 'row-resize';
-});
-
 el.resizerRightH.addEventListener('mousedown', () => {
   currentDrag = 'rightH';
   el.resizerRightH.classList.add('dragging');
@@ -1116,12 +931,6 @@ window.addEventListener('mousemove', e => {
     const clamped = Math.min(Math.max(percent, 20), 80);
     document.documentElement.style.setProperty('--left-col-width', `${clamped}%`);
   } 
-  else if (currentDrag === 'leftH') {
-    const colRect = el.leftCol.getBoundingClientRect();
-    const percent = ((e.clientY - colRect.top) / colRect.height) * 100;
-    const clamped = Math.min(Math.max(percent, 15), 85);
-    document.documentElement.style.setProperty('--left-top-height', `${clamped}%`);
-  } 
   else if (currentDrag === 'rightH') {
     const colRect = el.rightCol.getBoundingClientRect();
     const percent = ((e.clientY - colRect.top) / colRect.height) * 100;
@@ -1133,7 +942,6 @@ window.addEventListener('mousemove', e => {
 window.addEventListener('mouseup', () => {
   if (currentDrag) {
     el.resizerBarV.classList.remove('dragging');
-    el.resizerLeftH.classList.remove('dragging');
     el.resizerRightH.classList.remove('dragging');
     document.body.style.cursor = 'default';
     currentDrag = null;
@@ -1149,15 +957,6 @@ document.querySelectorAll('.toggle-btn').forEach(btn => {
       panel.classList.toggle('hidden');
       btn.classList.toggle('active', !panel.classList.contains('hidden'));
 
-      if (targetId === 'panel-timer' || targetId === 'panel-sounds') {
-        const timerHidden = el.panelTimer.classList.contains('hidden');
-        const soundsHidden = el.panelSounds.classList.contains('hidden');
-        el.resizerLeftH.style.display = (timerHidden || soundsHidden) ? 'none' : 'flex';
-        if (timerHidden) el.panelSounds.style.flex = '1';
-        if (soundsHidden) el.panelTimer.style.height = '100%';
-        if (!timerHidden && !soundsHidden) el.panelTimer.style.height = 'var(--left-top-height)';
-      }
-
       if (targetId === 'panel-yt' || targetId === 'panel-playlist') {
         const ytHidden = el.panelYt.classList.contains('hidden');
         const playlistHidden = el.panelPlaylist.classList.contains('hidden');
@@ -1168,52 +967,6 @@ document.querySelectorAll('.toggle-btn').forEach(btn => {
       }
     }
   });
-});
-
-/* ═══════════════════ MULTI-TRACK SOUND MIXER (EMOJI PLAY BUTTONS) ═══════════════════ */
-const soundTracks = {
-  stream:   new Audio('./sound/mixkit-natural-ambience-with-flowing-water-and-birds-61.wav'),
-  thunder:  new Audio('./sound/mixkit-thunderstorm-and-rain-loop-2402.wav'),
-  kitchen1: new Audio('./sound/freesound_community-kitchen-40741.mp3'),
-  kitchen2: new Audio('./sound/freesound_community-kitchen-sounds-2-26297.mp3'),
-  forest:   new Audio('./sound/freesound_community-forest-ambient-afternoon-55117.mp3'),
-  fire:     new Audio('./sound/storegraphic-crackling-fire-sound-307026.mp3')
-};
-
-Object.values(soundTracks).forEach(track => {
-  track.loop = true;
-  track.volume = 0.7;
-});
-
-document.querySelectorAll('.sound-channel').forEach(channel => {
-  const id = channel.dataset.id;
-  const track = soundTracks[id];
-  const btn = channel.querySelector('.channel-btn');
-  const slider = channel.querySelector('.v-slider');
-
-  btn.addEventListener('click', () => {
-    if (track.paused) {
-      track.play().then(() => {
-        btn.classList.add('active');
-      }).catch(err => {
-        console.warn("Playback requires user gesture:", err);
-      });
-    } else {
-      track.pause();
-      btn.classList.remove('active');
-    }
-  });
-
-  slider.addEventListener('input', e => {
-    track.volume = parseFloat(e.target.value);
-  });
-});
-
-el.btnMuteAllMixer.addEventListener('click', () => {
-  Object.values(soundTracks).forEach(track => {
-    track.pause();
-  });
-  document.querySelectorAll('.channel-btn').forEach(btn => btn.classList.remove('active'));
 });
 
 /* ═══════════════════ TITLE FETCHER & VIDEO PLAYER ═══════════════════ */
@@ -1601,10 +1354,6 @@ el.btnPauseAll.addEventListener('click', () => {
     el.btnPause.textContent = '▶ Resume';
     speak('All paused.');
   }
-
-  // Halt sound mixer
-  Object.values(soundTracks).forEach(track => track.pause());
-  document.querySelectorAll('.channel-btn').forEach(b => b.classList.remove('active'));
 
   // Halt YouTube Player
   try {
@@ -2050,6 +1799,7 @@ $('btnAddEx').addEventListener('click', addExercise);
 refreshFolderDropdowns();
 renderDirectory();
 renderQueue();
+rootPlaylists();
 renderPlaylists();
 renderPlaylist();
 </script>
