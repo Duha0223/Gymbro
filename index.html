@@ -14,10 +14,10 @@
     
     /* Phase background colors */
     --stage-bg-idle:    rgba(18, 32, 25, 0.85);
-    --stage-bg-ready:   rgba(92, 53, 18, 0.85);
-    --stage-bg-active:  rgba(94, 32, 22, 0.88);
-    --stage-bg-rest:    rgba(22, 68, 38, 0.85);
-    --stage-bg-done:    rgba(20, 48, 30, 0.90);
+    --stage-bg-ready:   rgba(92, 53, 18, 0.85);   /* Warm Amber Brown */
+    --stage-bg-active:  rgba(94, 32, 22, 0.88);   /* Deep Reddish Brown */
+    --stage-bg-rest:    rgba(22, 68, 38, 0.85);   /* Deep Forest Green */
+    --stage-bg-done:    rgba(20, 48, 30, 0.90);   /* Dark Spruce */
 
     /* Circle tones: 2x lighter than phase background */
     --circle-color-idle:   #6eb083;
@@ -76,6 +76,54 @@
     gap: 12px;
     align-items: center;
     flex-wrap: wrap;
+  }
+
+  /* Manual Help Button */
+  .btn-manual {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--glass-border-light);
+    color: var(--text);
+    padding: 5px 9px;
+    border-radius: 8px;
+    font-size: .75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .btn-manual:hover { background: rgba(255, 255, 255, 0.22); }
+
+  /* Modal Overlay for Manual */
+  .manual-modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center; z-index: 1000;
+    padding: 20px;
+  }
+  .manual-modal-overlay.open { display: flex; }
+  .manual-modal-box {
+    background: rgba(14, 26, 20, 0.92);
+    border: 1.5px solid var(--glass-border);
+    border-radius: 16px;
+    width: 100%; max-width: 680px; max-height: 85vh;
+    display: flex; flex-direction: column;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+    overflow: hidden;
+  }
+  .manual-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--glass-border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .manual-title { font-size: .95rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+  .manual-body {
+    padding: 16px; overflow-y: auto; font-size: .82rem; line-height: 1.5; color: var(--text);
+  }
+  .manual-body h3 { font-size: .88rem; color: #8edaa5; margin: 12px 0 4px; }
+  .manual-body ul { margin: 4px 0 10px 18px; padding: 0; }
+  .manual-body li { margin-bottom: 4px; }
+  .btn-close-modal {
+    background: rgba(180, 40, 40, 0.4); border: 1px solid rgba(255,255,255,0.2);
+    color: #fff; border-radius: 6px; padding: 4px 10px; font-size: .75rem; cursor: pointer;
   }
 
   .scale-ctrl {
@@ -597,7 +645,7 @@
   #playlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
   li.ex-item {
     background: rgba(255,255,255,0.06);
-    border: 1px solid var(--glass-border);
+    border: 1.5px solid var(--glass-border);
     border-radius: 10px;
     overflow: hidden;
     backdrop-filter: blur(8px);
@@ -648,6 +696,7 @@
       <div class="sub">Dynamic Multi-Split Station · Interactive Sound Mixer</div>
     </div>
     <div class="header-controls">
+      <button class="btn-manual" id="btnOpenManual">📖 Manual</button>
       <div class="scale-ctrl">
         <span>⏱️ Circle Size:</span>
         <input type="range" id="circleSizeSlider" min="90" max="320" value="160">
@@ -662,8 +711,61 @@
     </div>
   </header>
 
+  <!-- User Navigation Manual Modal -->
+  <div class="manual-modal-overlay" id="manualModal">
+    <div class="manual-modal-box">
+      <div class="manual-header">
+        <span class="manual-title">📖 Site User Manual & Guide</span>
+        <button class="btn-close-modal" id="btnCloseManual">Close ✕</button>
+      </div>
+      <div class="manual-body">
+        <h3>1. Customizing & Following Routines</h3>
+        <ul>
+          <li><strong>Build custom routines:</strong> Add your own exercises, specify sets and reps, hold times, and rest intervals.</li>
+          <li><strong>Support movement types:</strong> Set up counted repetitions (glute bridges, leg raises) or simple duration timers (planks, heat pads).</li>
+          <li><strong>Rearrange & organize:</strong> Drag and drop exercises to reorder your routine, or check/uncheck boxes to enable/disable movements.</li>
+          <li><strong>Hands-free audio cues:</strong> Listen to spoken voice prompts guiding you through countdowns, phase switches, and set completions.</li>
+          <li><strong>Screen wake lock:</strong> Automatically prevents your device's screen from dimming or locking while a workout runs.</li>
+        </ul>
+
+        <h3>2. Tracking with the Reactive Timer</h3>
+        <ul>
+          <li><strong>Phase background colors:</strong> Background tint shifts automatically—amber for prep, reddish-brown for active reps, and green for rest.</li>
+          <li><strong>Circle scaling:</strong> Adjust the circle size slider in the header to make the clock as large or compact as needed.</li>
+          <li><strong>Playback controls:</strong> Start, pause, resume, skip, or reset using dedicated buttons stacked beside the circle.</li>
+        </ul>
+
+        <h3>3. Mixing Ambient Audio</h3>
+        <ul>
+          <li><strong>Layer multiple sounds:</strong> Play and combine audio tracks simultaneously using your files in the <code>sound/</code> folder.</li>
+          <li><strong>Volume sliders:</strong> Use dedicated vertical volume sliders under each sound channel to balance your mix.</li>
+          <li><strong>Mute options:</strong> Mute individual tracks with one tap, or use the <em>Mute Mix</em> button to silence all soundscapes instantly.</li>
+        </ul>
+
+        <h3>4. Playing & Organizing YouTube Videos</h3>
+        <ul>
+          <li><strong>Watch while training:</strong> Play exercise guides or stretch tutorials directly alongside your workout.</li>
+          <li><strong>Layout split slider:</strong> Resize the width ratio between the video player and controls from 30% to 75%.</li>
+          <li><strong>Auto title fetching:</strong> Paste a YouTube URL or video ID; the app loads the video and automatically retrieves its title.</li>
+          <li><strong>Personal library folders:</strong> Save videos into custom folders (like <em>Back Rehab</em> or <em>Stretches</em>) or keep them unassigned in the main directory.</li>
+          <li><strong>Inline title editing:</strong> Click the pencil icon to rename any saved video.</li>
+          <li><strong>Global search:</strong> Find saved videos instantly across all folders using the unified search bar.</li>
+          <li><strong>Queues & playlists:</strong> Add individual videos or entire folders into a playback queue, reorder via drag-and-drop handles, and save custom arrangements as reusable playlists.</li>
+        </ul>
+
+        <h3>5. Workspace & Window Management</h3>
+        <ul>
+          <li><strong>Resizer bars:</strong> Drag horizontal and vertical divider bars to resize panels to your exact screen layout.</li>
+          <li><strong>Panel toggles:</strong> Show or hide the Timer, Sound Mixer, Video Station, or Routine builder from the top bar.</li>
+          <li><strong>Master Pause All:</strong> Instantly halts your workout timer, silences ambient sound tracks, and pauses video playback together.</li>
+          <li><strong>Local persistence:</strong> All routines, custom folders, saved videos, and playlists are stored directly in your browser.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <div class="layout-grid" id="layoutGrid">
-    <!-- LEFT SIDE: Timer & Multi-Track Sound Mixer -->
+    <!-- LEFT SIDE: Timer & Sounds -->
     <div class="left-col" id="leftCol">
       <div class="panel" id="panel-timer">
         <div class="panel-header">
@@ -700,7 +802,7 @@
 
       <div class="resizer-bar-h" id="resizerLeftH"></div>
 
-      <!-- Multi-Track Ambient Sound Mixer -->
+      <!-- Multi-Track Sound Mixer (Local Files in ./sound/ folder) -->
       <div class="panel" id="panel-sounds">
         <div class="panel-header">
           <span class="panel-title">🌿 Sound Mixer (Layer Multiple)</span>
@@ -878,9 +980,17 @@
 </div>
 
 <script>
+/* ═══════════════════ MANUAL MODAL TOGGLES ═══════════════════ */
+const manualModal = $('manualModal');
+$('btnOpenManual').addEventListener('click', () => manualModal.classList.add('open'));
+$('btnCloseManual').addEventListener('click', () => manualModal.classList.remove('open'));
+manualModal.addEventListener('click', (e) => {
+  if (e.target === manualModal) manualModal.classList.remove('open');
+});
+
 /* ═══════════════════ DATA & STORAGE ═══════════════════ */
-const STORAGE_KEY = 'physio_suite_v18';
-const YT_MASTER_KEY = 'physio_yt_master_v4';
+const STORAGE_KEY = 'physio_suite_v20';
+const YT_MASTER_KEY = 'physio_yt_master_v6';
 const CIRC = 2 * Math.PI * 86;
 
 const DEFAULT_EXERCISES = [
@@ -1058,37 +1168,33 @@ document.querySelectorAll('.toggle-btn').forEach(btn => {
   });
 });
 
-/* ═══════════════════ MULTI-TRACK SOUND MIXER (UPLOADED FILES) ═══════════════════ */
-// Map uploaded local files located in the ./sounds/ repository folder
+/* ═══════════════════ MULTI-TRACK SOUND MIXER (CORRECTED ./sound/ PATH) ═══════════════════ */
 const soundTracks = {
-  stream:   new Audio('./sounds/mixkit-natural-ambience-with-flowing-water-and-birds-61.wav'),
-  thunder:  new Audio('./sounds/mixkit-thunderstorm-and-rain-loop-2402.wav'),
-  kitchen1: new Audio('./sounds/freesound_community-kitchen-40741.mp3'),
-  kitchen2: new Audio('./sounds/freesound_community-kitchen-sounds-2-26297.mp3'),
-  forest:   new Audio('./sounds/freesound_community-forest-ambient-afternoon-55117.mp3'),
-  fire:     new Audio('./sounds/storegraphic-crackling-fire-sound-307026.mp3')
+  stream:   new Audio('./sound/mixkit-natural-ambience-with-flowing-water-and-birds-61.wav'),
+  thunder:  new Audio('./sound/mixkit-thunderstorm-and-rain-loop-2402.wav'),
+  kitchen1: new Audio('./sound/freesound_community-kitchen-40741.mp3'),
+  kitchen2: new Audio('./sound/freesound_community-kitchen-sounds-2-26297.mp3'),
+  forest:   new Audio('./sound/freesound_community-forest-ambient-afternoon-55117.mp3'),
+  fire:     new Audio('./sound/storegraphic-crackling-fire-sound-307026.mp3')
 };
 
-// Configure infinite looping
 Object.values(soundTracks).forEach(track => {
   track.loop = true;
   track.volume = 0.7;
 });
 
-// Setup Channel Controls
 document.querySelectorAll('.sound-channel').forEach(channel => {
   const id = channel.dataset.id;
   const track = soundTracks[id];
   const btn = channel.querySelector('.channel-btn');
   const slider = channel.querySelector('.v-slider');
 
-  // Toggle play/pause
   btn.addEventListener('click', () => {
     if (track.paused) {
       track.play().then(() => {
         btn.classList.add('active');
       }).catch(err => {
-        console.warn("Playback requires user gesture or file exists check:", err);
+        console.warn("Playback requires user gesture:", err);
       });
     } else {
       track.pause();
@@ -1096,13 +1202,11 @@ document.querySelectorAll('.sound-channel').forEach(channel => {
     }
   });
 
-  // Vertical Volume Adjustment
   slider.addEventListener('input', e => {
     track.volume = parseFloat(e.target.value);
   });
 });
 
-// Mute All Channels in Mixer
 el.btnMuteAllMixer.addEventListener('click', () => {
   Object.values(soundTracks).forEach(track => {
     track.pause();
